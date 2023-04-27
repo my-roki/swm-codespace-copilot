@@ -1,0 +1,31 @@
+name: Development
+on:
+  # add a trigger for the push event
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # add step to checkout the code
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      # add step to install .NET SDK 7
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.x
+      
+      # add a step to restore NuGet packages
+      - name: Restore NuGet Packages
+        run: dotnet restore
+      
+      # add a new step to build the entire solution
+      - name: Build solution
+        run: dotnet build
+        
+      # add a new step to run unit tests
+      - name: Run unit tests
+        run: dotnet test 
